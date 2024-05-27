@@ -1,0 +1,31 @@
+name: MusicPlus
+description: "Working but buggy!"
+author: Babychaosfloh_HD
+version: '${project.version}'
+main: me.babychaosfloh_hd.musicplus.MusicPlus
+api-version: '1.20'
+
+commands:
+  getpaper:
+    description: "Get test Paper"
+    permission: musicplus.test
+    permisson-message: "You don't have permission to get a test Paper "
+    usage: /getpaper
+
+  music_menu:
+    description: "Open the disc manger menu"
+    permission: musicplus.menu
+    permisson-message: "You don't have permission to open this menu"
+    usage: /music_menu
+
+  MsP-reload:
+    description: "Reload MusicPlus (files)"
+    permission: musicplus.reload
+    permisson-message: "You don't have permission to reload this plugin"
+    usage: /MsP-reload
+
+  noteblock_indicator:
+    description: "This is used to indicate a command block as a custom Noteblock"
+
+  download:
+    description: "test"

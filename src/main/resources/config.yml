@@ -1,0 +1,68 @@
+######################
+#+                  +#
+#   MAIN SETTINGS    #
+#+                  +#
+######################
+#debug
+
+#If you want the plugin to use CustomModelData to identify the custom discs! (Default true)
+
+#use_custommodeldata
+
+######################
+#+                  +#
+# TEST ITEM SETTINGS #
+#+                  +#
+######################
+
+#The CustomModelData of the test disc. (Only needed if use_custommodeldata is true). Use int!
+#Title_types - none (to disable), title, subtitle, actionbar
+#Title_text Default text - in Json fromat.
+#Title_translate - Translate key for the title (Format: "EXAMPLE.DISCNAME.title") ⚠️Update Needed⚠️
+#fadeIn - time in ticks for titles to fade in. Defaults to 10.
+#stay - time in ticks for titles to stay. Defaults to 70.
+#fadeOut - time in ticks for titles to fade out. Defaults to 20.
+#message - Default Chat message to send. "none" to siable (Color codes useable with &).
+#message_translate - Translate key for the message (Format: "EXAMPLE.DISCNAME.message") ⚠️Update Needed⚠️
+disc_44444:
+  ==: org.bukkit.inventory.ItemStack
+  v: 3465
+  type: PAPER
+  meta:
+    ==: ItemMeta
+    meta-type: UNSPECIFIC
+    display-name: '{"text":"Test Paper"}'
+    lore:
+      - '{"extra":[{"text":"This test Paper is for testing the plugin: CustomDisc"}],"text":""}'
+      - '{"extra":[{"text":"By: Babychaosfloh_HD"}],"text":""}'
+      - '{"extra":[{"text":"(also known as McBlock or McBlock_Y)"}],"text":""}'
+    custom-model-data: 44444
+    PublicBukkitValues:
+      musicplus:message: You clicked a &nblock&r with a Paper
+      musciplus:sound: minecraft:sfx.test
+  #material: "PAPER"
+  #amount: 1
+  #name: "Test &lPaper"
+  #custom-model-data: 44444
+  #lore:
+  #  - "This test Paper is for testing the plugin: CustomDisc"
+  #  - "By: Babychaosfloh_HD"
+  #  - "(also known as McBlock or McBlock_Y)"
+#title_type
+#title_text
+#title_translate
+#fade_in
+#stay
+#fade_out
+#message_translate
+
+test_features: #remove the hashtag to enable the feature, set hashtag to disable. Two hashtags mean that the feature is not available for your current plugin version.
+##  - jukebox_persistent #specific way to store the disc for the Jukebox to keep plugin in file more clear
+#  - custom_jukebox
+#  - disc_menu_model: 9000000
+
+######################
+#+                  +#
+#    SECTION ONE     #
+#+                  +#
+######################
