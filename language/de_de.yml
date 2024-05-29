@@ -1,1 +1,14 @@
 keyboard: "QWERTZUIOASDFGHJKLYXCVBNM,."
+
+menu_any_back: "Zurück"
+
+menu_music_manager_title: "Musik Manager"
+menu_music_manager_close: "Beenden"
+menu_music_manager_note_manager: "Noten Manager"
+menu_music_manager_disc_manager: "Schallplatten Manager"
+menu_note_manager_title: "Noten Manaer"
+
+menu_note_manager_add_notes: "Hinzufügen"
+menu_note_manager_title: "Noten Manager"
+
+menu_disc_manager_title: "Schallplatten Manager"
