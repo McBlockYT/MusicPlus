@@ -1,6 +1,7 @@
 package me.babychaosfloh_hd.musicplus.listener;
 
 import me.babychaosfloh_hd.musicplus.MusicPlus;
+import me.babychaosfloh_hd.musicplus.files.filemanager;
 import me.babychaosfloh_hd.musicplus.item.dischandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class jukeboxlistener implements Listener {
             Player player = e.getPlayer();
             ItemStack item = player.getInventory().getItemInMainHand();
             dischandler.del(player, clicked);
-            if (item.getType() != Material.AIR && item.getType() == MusicPlus.getPlugin().getConfig().getItemStack("disc_44444").getType() && dischandler.check(clicked, item, player)) {
+            if (dischandler.check(clicked, item, player)) {
             }
         }
 
