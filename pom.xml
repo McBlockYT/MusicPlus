@@ -45,14 +45,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                <relocations>
-                    <relocation>
-                        <pattern>com.jeff_media.customblockdata</pattern>
-                        <shadedPattern>me.babychaosfloh_hd.musicplus.customblockdata</shadedPattern>
-                    </relocation>
-                </relocations>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -61,6 +53,10 @@
                 <version>3.5.0</version>
                 <configuration>
                     <relocations>
+                        <relocation>
+                            <pattern>com.jeff_media.customblockdata</pattern>
+                            <shadedPattern>me.babychaosfloh_hd.musicplus.customblockdata</shadedPattern>
+                        </relocation>
                         <relocation>
                             <pattern>com.jeff_media.morepersistentdatatypes</pattern>
                             <shadedPattern>me.babychaosfloh_hd.musicplus.morepersistentdatatypes</shadedPattern>
