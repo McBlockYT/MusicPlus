@@ -78,10 +78,10 @@ public class dischandler {
         if (filemanager.getjuke().isItemStack("discs." + location)) {
             ItemStack item = filemanager.getjuke().getItemStack("discs." + location);
             item.setAmount(1);
+            world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), item);
             filemanager.getjuke().set("discs", (Object)null);
             filemanager.getjuke().options().copyDefaults(true);
             filemanager.savejuke();
-            world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), item);
         }
 
     }
