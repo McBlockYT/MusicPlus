@@ -41,15 +41,21 @@ public class dischandler {
             modeldata = player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
         }
 
-        if (player.getInventory().getItemInMainHand() != null) {
+        if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() == Material.PAPER) {
             PersistentDataContainer data = new CustomBlockData(block, that);
+            ItemStack disc = item.clone();
+            disc.setAmount(1);
             if (!data.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
-                data.set(new NamespacedKey(that, "disc"), DataType.ITEM_STACK, item);
-                player.sendMessage("Added :" + " to: " + block);
-                player.sendMessage(data.get(new NamespacedKey(that, "disc"), DataType.ITEM_STACK).toString());
+                data.set(new NamespacedKey(that, "disc"), DataType.ITEM_STACK, disc);
+                player.sendMessage("Inserted!");
+                ItemStack storeItem = player.getInventory().getItemInMainHand();
+                int ammount = storeItem.getAmount();
+                storeItem.setAmount(ammount - 1);
+                player.setItemInHand(storeItem);
             }
         }
 
+        /*
         int count = filemanager.getjuke().getInt("count");
         ItemStack disc = filemanager.getdisc().getItemStack("disc_" + modeldata);
         if (disc != null && player.getInventory().getItemInMainHand().getType() != Material.AIR) {
@@ -77,6 +83,7 @@ public class dischandler {
                 }
             }
         }
+        */
 
         return true;
     }
@@ -89,6 +96,14 @@ public class dischandler {
         String location = world.getName() + ";" + x + ";" + y + ";" + z;
         Location pos = block.getLocation();
 
+        PersistentDataContainer data = new CustomBlockData(block, that);
+        if (data.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
+            ItemStack drop = data.get(new NamespacedKey(that, "disc"), DataType.ITEM_STACK);
+            world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), drop);
+            data.remove(new NamespacedKey(that, "disc"));
+        }
+
+        /*
         if (filemanager.getjuke().isItemStack("discs." + location)) {
 
             player.sendMessage(location);
@@ -101,6 +116,7 @@ public class dischandler {
             //filemanager.getjuke().options().copyDefaults(true);
             filemanager.savejuke();
         }
+         */
 
     }
 }

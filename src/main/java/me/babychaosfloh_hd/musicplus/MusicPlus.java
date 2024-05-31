@@ -2,6 +2,7 @@ package me.babychaosfloh_hd.musicplus;
 
 import jdk.internal.foreign.Utils;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
+import me.babychaosfloh_hd.musicplus.item.debugitem;
 import me.babychaosfloh_hd.musicplus.listener.jukeboxlistener;
 import me.babychaosfloh_hd.musicplus.listener.noteblocklistener;
 import me.babychaosfloh_hd.musicplus.gui.guimanager;
@@ -61,6 +62,7 @@ public class MusicPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new jukeboxlistener(this), this);
         getServer().getPluginManager().registerEvents(new noteblocklistener(this), this);
         getServer().getPluginManager().registerEvents(new guimanager(this), this);
+        getServer().getPluginManager().registerEvents(new debugitem(this), this);
 
         this.saveDefaultConfig();
 
