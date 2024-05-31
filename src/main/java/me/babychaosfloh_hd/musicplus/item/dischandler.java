@@ -2,6 +2,9 @@ package me.babychaosfloh_hd.musicplus.item;
 
 import java.util.logging.Level;
 import javax.annotation.Nullable;
+
+import com.jeff_media.customblockdata.CustomBlockData;
+import com.jeff_media.morepersistentdatatypes.DataType;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
 import org.bukkit.Bukkit;
@@ -18,6 +21,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class dischandler {
     private final MusicPlus plugin;
+    private static final MusicPlus that = MusicPlus.getPlugin();
     private static int modeldata;
     private static ItemMeta discmeta;
     private static int discmodeldata;
@@ -38,7 +42,12 @@ public class dischandler {
         }
 
         if (player.getInventory().getItemInMainHand() != null) {
-
+            PersistentDataContainer data = new CustomBlockData(block, that);
+            if (!data.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
+                data.set(new NamespacedKey(that, "disc"), DataType.ITEM_STACK, item);
+                player.sendMessage("Added :" + " to: " + block);
+                player.sendMessage(data.get(new NamespacedKey(that, "disc"), DataType.ITEM_STACK).toString());
+            }
         }
 
         int count = filemanager.getjuke().getInt("count");
