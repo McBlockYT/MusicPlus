@@ -75,12 +75,19 @@ public class dischandler {
         int z = (int)block.getLocation().getZ();
         String location = world.getName() + ";" + x + ";" + y + ";" + z;
         Location pos = block.getLocation();
+
+        filemanager.reload();
+
         if (filemanager.getjuke().isItemStack("discs." + location)) {
+
+            player.sendMessage(location);
+            player.sendMessage(filemanager.getjuke().getItemStack("discs." + location).toString());
+
             ItemStack item = filemanager.getjuke().getItemStack("discs." + location);
             item.setAmount(1);
             world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), item);
             filemanager.getjuke().set("discs", (Object)null);
-            filemanager.getjuke().options().copyDefaults(true);
+            //filemanager.getjuke().options().copyDefaults(true);
             filemanager.savejuke();
         }
 
