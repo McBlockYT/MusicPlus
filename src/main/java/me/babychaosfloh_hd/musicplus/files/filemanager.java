@@ -110,7 +110,7 @@ public class filemanager {
         } catch (IOException var1) {
             Bukkit.getServer().getPluginManager().getPlugin("MusicPlus").getLogger().log(Level.WARNING, "Couldn't save file" + jukeFile);
         }
-
+        //jukeFile = YamlConfiguration.loadConfiguration(juke);
     }
 
     public static void savelang() {
@@ -144,7 +144,7 @@ public class filemanager {
         jukeFile = YamlConfiguration.loadConfiguration(juke);
         discFile = YamlConfiguration.loadConfiguration(disc);
         noteFile = YamlConfiguration.loadConfiguration(note);
-        langFile = YamlConfiguration.loadConfiguration(lang);
-        language.reload();
+        //langFile = YamlConfiguration.loadConfiguration(lang);
+        //language.reload();
     }
 }
