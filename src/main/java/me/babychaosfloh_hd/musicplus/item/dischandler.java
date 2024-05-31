@@ -37,6 +37,10 @@ public class dischandler {
             modeldata = player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
         }
 
+        if (player.getInventory().getItemInMainHand() != null) {
+
+        }
+
         int count = filemanager.getjuke().getInt("count");
         ItemStack disc = filemanager.getdisc().getItemStack("disc_" + modeldata);
         if (disc != null && player.getInventory().getItemInMainHand().getType() != Material.AIR) {
