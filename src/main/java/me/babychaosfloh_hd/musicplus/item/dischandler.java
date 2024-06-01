@@ -1,13 +1,10 @@
 package me.babychaosfloh_hd.musicplus.item;
 
-import java.util.logging.Level;
 import javax.annotation.Nullable;
 
 import com.jeff_media.customblockdata.CustomBlockData;
 import com.jeff_media.morepersistentdatatypes.DataType;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
-import me.babychaosfloh_hd.musicplus.files.filemanager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -31,27 +28,35 @@ public class dischandler {
     }
 
     public static Boolean check(Block block, @Nullable ItemStack item, Player player) {
+
         World world = block.getWorld();
         int x = (int)block.getLocation().getX();
         int y = (int)block.getLocation().getY();
         int z = (int)block.getLocation().getZ();
         String location = world.getName() + ";" + x + ";" + y + ";" + z;
-        ItemMeta meta = item.getItemMeta();
+        ItemStack disc = item.clone();
+        ItemMeta meta = disc.getItemMeta();
+        Location pos = block.getLocation();
+
         if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().hasItemMeta() && player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) {
             modeldata = player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
         }
 
         if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() == Material.PAPER) {
-            PersistentDataContainer data = new CustomBlockData(block, that);
-            ItemStack disc = item.clone();
+
+            PersistentDataContainer blockdata = new CustomBlockData(block, that);
+            PersistentDataContainer itemData = meta.getPersistentDataContainer();
+            String sound = itemData.get(new NamespacedKey(MusicPlus.getPlugin(), "message"), PersistentDataType.STRING);
             disc.setAmount(1);
-            if (!data.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
-                data.set(new NamespacedKey(that, "disc"), DataType.ITEM_STACK, disc);
+
+            if (!blockdata.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
+                blockdata.set(new NamespacedKey(that, "disc"), DataType.ITEM_STACK, disc);
                 player.sendMessage("Inserted!");
                 ItemStack storeItem = player.getInventory().getItemInMainHand();
                 int ammount = storeItem.getAmount();
                 storeItem.setAmount(ammount - 1);
                 player.setItemInHand(storeItem);
+                world.playSound(pos, "minecraft:sfx.test", 1.0F, 1.0F);
             }
         }
 
