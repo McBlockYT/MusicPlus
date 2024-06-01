@@ -1,41 +1,26 @@
 package me.babychaosfloh_hd.musicplus;
 
-import jdk.internal.foreign.Utils;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
-import me.babychaosfloh_hd.musicplus.item.debugitem;
 import me.babychaosfloh_hd.musicplus.listener.jukeboxlistener;
 import me.babychaosfloh_hd.musicplus.listener.noteblocklistener;
 import me.babychaosfloh_hd.musicplus.gui.guimanager;
 
-import java.lang.reflect.Field;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
 
-
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import org.bukkit.inventory.meta.tags.ItemTagType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Material;
-
-import org.bukkit.permissions.Permission;
 
 import java.util.*;
 //import java.util.Arrays;
 //import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.BlockCommandSender;
@@ -44,9 +29,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
-
-import java.time.LocalDate;
-import java.util.logging.Logger;
 
 public class MusicPlus extends JavaPlugin {
 
@@ -62,7 +44,6 @@ public class MusicPlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new jukeboxlistener(this), this);
         getServer().getPluginManager().registerEvents(new noteblocklistener(this), this);
         getServer().getPluginManager().registerEvents(new guimanager(this), this);
-        getServer().getPluginManager().registerEvents(new debugitem(this), this);
 
         this.saveDefaultConfig();
 

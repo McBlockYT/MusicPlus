@@ -99,8 +99,9 @@ public class dischandler {
         PersistentDataContainer data = new CustomBlockData(block, that);
         if (data.has(new NamespacedKey(that, "disc"), DataType.ITEM_STACK)) {
             ItemStack drop = data.get(new NamespacedKey(that, "disc"), DataType.ITEM_STACK);
-            world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), drop);
+            //world.dropItemNaturally(pos.add(0.0D, 0.5D, 0.0D), drop);
             data.remove(new NamespacedKey(that, "disc"));
+            player.sendMessage("removed");
         }
 
         /*
