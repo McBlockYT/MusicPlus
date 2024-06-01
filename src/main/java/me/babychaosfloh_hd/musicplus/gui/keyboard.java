@@ -18,11 +18,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class keyboard implements Listener {
     private static final MusicPlus that = MusicPlus.getPlugin();
     private static List<ItemStack> nonekey = new ArrayList();
-    private static Inventory keyboard;
+    private static Inventory inv;
     private static String[] keys;
     private static double count;
     private static String local;
-    private static List<String> word;
+    private static List<String> word = new ArrayList<>();
     private static int slots;
 
     public keyboard(MusicPlus musicPlus) {
@@ -86,13 +86,15 @@ public class keyboard implements Listener {
         keyboard.setItem(slots - 7, space);
         keyboard.setItem(slots - 8, delete);
         keyboard.setItem(slots - 9, delete);
+
+        inv = keyboard;
         player.openInventory(keyboard);
     }
 
     @EventHandler
     public static void onClick(InventoryClickEvent e) {
         that.getLogger().info("Key Clicked");
-        if (e.getClickedInventory().equals(keyboard)) {
+        if (e.getView().getTopInventory().equals(inv) && e.getClickedInventory().equals(inv)) {
             ItemStack key = e.getCurrentItem().clone();
             ItemMeta keyMeta = key.getItemMeta();
             String keyname = keyMeta.getDisplayName();
@@ -101,10 +103,10 @@ public class keyboard implements Listener {
                 word.add(keyname);
                 that.getLogger().info(word.toString());
             }
-            else if (keyname.equals(language.getlang(local).getString("menu_keyboard_delete"))) {
+            else if (keyname.equals(language.getlang(local).getString("menu_keyboard_delete")) && !word.isEmpty()) {
                 int i = word.size();
-                word.subList(i - 1, i - 1);
-                that.getLogger().info(word.toString());
+                word.remove(i - 1);
+                that.getLogger().info("" + word);
             }
             e.setCancelled(true);
         }
