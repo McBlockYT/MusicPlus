@@ -289,6 +289,7 @@ public class guimanager implements Listener {
                 if (e.getSlot() == 4 && e.isLeftClick()) {
                     keyboard.keyboard(player);
                 } else if (e.getSlot() == 4 && e.isShiftClick() && e.isRightClick()) {
+                    open = true;
                     NoteMenu(player);
                 }
             }

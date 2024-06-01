@@ -91,19 +91,22 @@ public class keyboard implements Listener {
 
     @EventHandler
     public static void onClick(InventoryClickEvent e) {
-        if (e.getClickedInventory() == keyboard && e.getCurrentItem().getType() != null) {
-            ItemStack key = e.getCurrentItem();
+        that.getLogger().info("Key Clicked");
+        if (e.getClickedInventory().equals(keyboard)) {
+            ItemStack key = e.getCurrentItem().clone();
             ItemMeta keyMeta = key.getItemMeta();
             String keyname = keyMeta.getDisplayName();
+            that.getLogger().info("Key is: " + key.getItemMeta().getDisplayName());
             if (!nonekey.contains(key)) {
                 word.add(keyname);
                 that.getLogger().info(word.toString());
-            } else if (keyname.equals(language.getlang(local).getString("menu_keyboard_delete"))) {
+            }
+            else if (keyname.equals(language.getlang(local).getString("menu_keyboard_delete"))) {
                 int i = word.size();
                 word.subList(i - 1, i - 1);
                 that.getLogger().info(word.toString());
             }
+            e.setCancelled(true);
         }
-
     }
 }

@@ -1,7 +1,7 @@
 name: MusicPlus
 description: "Working but buggy!"
 author: Babychaosfloh_HD
-version: '${project.version}'
+version: '1.0'
 main: me.babychaosfloh_hd.musicplus.MusicPlus
 api-version: '1.20'
 
