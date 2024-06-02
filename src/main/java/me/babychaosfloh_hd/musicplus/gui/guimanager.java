@@ -26,7 +26,7 @@ public class guimanager implements Listener {
     private final MusicPlus plugin;
     private static final MusicPlus that = MusicPlus.getPlugin();
     private static List<ItemStack> itemStacks;
-    private static Boolean open = false;
+    public static Boolean open = false;
     private static List<String> lore = new ArrayList();
     public static String confriminv;
     public static ItemStack delItem;
@@ -268,9 +268,9 @@ public class guimanager implements Listener {
                 player.sendMessage(ChatColor.RED + "Sorry you got no space in your inventory");
             } else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && !player.hasPermission("musicplus.give")) {
                 player.sendMessage(ChatColor.RED + "Sorry you only have the permission to view the Custom Music Discs!");
-            } else if (e.getClick().isRightClick() && e.getClick().isShiftClick() && e.getView().getTitle().equals(language.getlang(local).getString("menu_confirm_title")) && e.getCurrentItem().getType().equals(Material.RED_WOOL)) {
+            } else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_confirm_title")) && e.getCurrentItem().getType().equals(Material.RED_WOOL)) {
                 that.getLogger().warning("deleting: " + delItem);
-                filemanager.getnote().set(delItem.getType().toString(), (Object)null);
+                filemanager.getnote().set(delItem.getType().toString(), null);
                 filemanager.savenote();
                 filemanager.reload();
                 open = true;
@@ -285,9 +285,8 @@ public class guimanager implements Listener {
                     clone.setItemMeta(cloneMeta);
                     inv.setItem(4, clone);
                 }
-
                 if (e.getSlot() == 4 && e.isLeftClick()) {
-                    keyboard.keyboard(player);
+                    keyboard.keyboard(player, e.getCurrentItem().clone());
                 } else if (e.getSlot() == 4 && e.isShiftClick() && e.isRightClick()) {
                     open = true;
                     NoteMenu(player);
