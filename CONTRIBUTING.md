@@ -1,3 +1,0 @@
-# MusicPlus Pull Request guide:
-
-
