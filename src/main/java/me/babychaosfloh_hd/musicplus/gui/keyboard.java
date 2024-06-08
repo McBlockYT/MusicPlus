@@ -7,6 +7,7 @@ import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.download.language;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.C;
 
 public class keyboard implements Listener {
     private static final MusicPlus that = MusicPlus.getPlugin();
@@ -24,7 +26,7 @@ public class keyboard implements Listener {
     private static  String keyname;
     private static String[] keys;
     private static Inventory inv;
-    private static ItemStack add;
+    public static ItemStack add;
     private static double count;
     private static String local;
     private static int slots;
@@ -68,21 +70,32 @@ public class keyboard implements Listener {
         ItemMeta delMeta = delete.getItemMeta();
         delMeta.setDisplayName(language.getlang(local).getString("menu_keyboard_delete"));
         delete.setItemMeta(delMeta);
+
         ItemStack space = new ItemStack(Material.PAPER);
         ItemMeta spaceMeta = space.getItemMeta();
         spaceMeta.setDisplayName(language.getlang(local).getString("menu_keyboard_space"));
         space.setItemMeta(spaceMeta);
+
         ItemStack confirm = new ItemStack(Material.GREEN_WOOL);
         ItemMeta confirmMeta = space.getItemMeta();
         confirmMeta.setDisplayName(language.getlang(local).getString("menu_confirm_confirm"));
         confirm.setItemMeta(confirmMeta);
+
         ItemStack cancel = new ItemStack(Material.RED_WOOL);
         ItemMeta cancelMeta = space.getItemMeta();
         cancelMeta.setDisplayName(language.getlang(local).getString("menu_confirm_cancel"));
         cancel.setItemMeta(cancelMeta);
+
+        ItemStack num = new ItemStack(Material.PAPER);
+        ItemMeta numMeta = num.getItemMeta();
+        numMeta.setDisplayName(language.getlang(local).getString("menu_keyboard_num"));
+        num.setItemMeta(numMeta);
+
         nonekey.add(cancel);
         nonekey.add(confirm);
         nonekey.add(delete);
+        nonekey.add(num);
+
         keyboard.setItem(slots - 1, cancel);
         keyboard.setItem(slots - 2, confirm);
         keyboard.setItem(slots - 3, space);
@@ -92,18 +105,36 @@ public class keyboard implements Listener {
         keyboard.setItem(slots - 7, space);
         keyboard.setItem(slots - 8, delete);
         keyboard.setItem(slots - 9, delete);
+        keyboard.setItem(slots - 10, num);
+        keyboard.setItem(slots - 11, num);
 
         inv = keyboard;
         player.openInventory(keyboard);
+    }
+
+    public static void numPad(Player player) {
+
+        Inventory num = Bukkit.createInventory(player, 9, language.getlang(local).getString("menu_numpad_title"));
+
+        ItemStack wip = new ItemStack(Material.BARRIER);
+        ItemMeta wipMeta = wip.getItemMeta();
+        wipMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "WORK IN PROGRESS");
+        wipMeta.setLore(language.getlang(local).getStringList("menu_numpad_workingporgress"));
+        wip.setItemMeta(wipMeta);
+
+        num.setItem(4, wip);
+        player.openInventory(num);
     }
 
     @EventHandler
     public static void onClick(InventoryClickEvent e) {
         that.getLogger().info("Key Clicked");
         if (e.getView().getTopInventory().equals(inv) && e.getClickedInventory().equals(inv)) {
+
             ItemStack key = e.getCurrentItem().clone();
             ItemMeta keyMeta = key.getItemMeta();
             Player player = Bukkit.getPlayer(e.getWhoClicked().getName());
+
             if (!keyMeta.getDisplayName().equals("Space")) {
                 keyname = keyMeta.getDisplayName();
             }
@@ -111,6 +142,10 @@ public class keyboard implements Listener {
                 keyname = " ";
             }
             that.getLogger().info("Key is: " + key.getItemMeta().getDisplayName());
+            if (keyname.equals(language.getlang(local).getString("menu_keyboard_num"))) {
+                guimanager.open = true;
+                numPad(player);
+            }
             if (!nonekey.contains(key)) {
                 word.add(keyname);
                 out = "";
@@ -145,11 +180,3 @@ public class keyboard implements Listener {
         }
     }
 }
-
-/*
-filemanager.getnote().set(add.getType().toString(), out);
-                filemanager.savenote();
-                filemanager.reload();
-                open = true;
-                NoteMenu(player);
- */

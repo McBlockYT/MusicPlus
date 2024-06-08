@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.download.language;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -211,12 +212,29 @@ public class guimanager implements Listener {
         player.openInventory(menu);
     }
 
+    public static void testGui(Player player) {
+        Inventory menu = Bukkit.createInventory(player, InventoryType.ANVIL, "test");
+
+        ItemStack item = new ItemStack(Material.PAPER);
+        menu.setItem(0, item);
+
+        inv = menu;
+        player.openInventory(menu);
+    }
+
     @EventHandler
     public void onMenuClose(InventoryCloseEvent e) {
+
+        Player player = Bukkit.getPlayer(e.getPlayer().getName());
+
         if (!open) {
             conf = null;
             inv = null;
-        } else {
+        }
+        else if (open && e.getView().getTitle().equals(language.getlang(local).getString("menu_numpad_title"))) {
+            keyboard.keyboard(player, keyboard.add);
+        }
+        else {
             open = false;
         }
 
@@ -233,19 +251,25 @@ public class guimanager implements Listener {
             that.getLogger().log(Level.INFO, CurrentItem.getItemMeta().toString());
             if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(language.getlang(local).getString("menu_music_manager_disc_manager"))) {
                 open = true;
-                DiscMenu(player);
-            } else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(language.getlang(local).getString("menu_music_manager_note_manager"))) {
+                testGui(player);
+                //DiscMenu(player);
+            }
+            else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(language.getlang(local).getString("menu_music_manager_note_manager"))) {
                 open = true;
                 NoteMenu(player);
-            } else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_any_back"))) {
+            }
+            else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_any_back"))) {
                 open = true;
                 MainMenu(player);
-            } else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_music_manager_close"))) {
+            }
+            else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_music_manager_close"))) {
                 player.closeInventory();
-            } else if (itemStacks.contains(e.getCurrentItem()) && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
+            }
+            else if (itemStacks.contains(e.getCurrentItem()) && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
                 open = true;
                 confirmdelGui(player, e.getCurrentItem());
-            } else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + language.getlang(local).getString("menu_note_manager_add_notes"))) {
+            }
+            else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + language.getlang(local).getString("menu_note_manager_add_notes"))) {
                 open = true;
                 NoteAddGui(player);
             }
@@ -296,5 +320,19 @@ public class guimanager implements Listener {
             e.setCancelled(true);
         }
 
+    }
+
+    @EventHandler
+    public void onAnvilClick(InventoryClickEvent event) {
+        Inventory inventory = event.getClickedInventory();
+        if (inventory.getType() == InventoryType.ANVIL) {
+            if (event.getSlotType() == InventoryType.SlotType.RESULT) {
+                try {
+                    that.getLogger().info((String) inventory.getClass().getMethod("getRenameText").invoke(inventory));
+                } catch (Exception e) {
+                   that.getLogger().warning(e.getMessage());
+                }
+            }
+        }
     }
 }
