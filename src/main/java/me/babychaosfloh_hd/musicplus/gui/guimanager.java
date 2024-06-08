@@ -1,9 +1,6 @@
 package me.babychaosfloh_hd.musicplus.gui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 import java.util.logging.Level;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.download.language;
@@ -213,13 +210,14 @@ public class guimanager implements Listener {
     }
 
     public static void testGui(Player player) {
+
         Inventory menu = Bukkit.createInventory(player, InventoryType.ANVIL, "test");
 
         ItemStack item = new ItemStack(Material.PAPER);
         menu.setItem(0, item);
 
-        inv = menu;
-        player.openInventory(menu);
+        //inv = menu;
+        //player.openInventory(menu);
     }
 
     @EventHandler
