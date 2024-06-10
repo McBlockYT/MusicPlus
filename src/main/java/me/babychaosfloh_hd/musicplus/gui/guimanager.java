@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.download.language;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
