@@ -1,7 +1,6 @@
 package me.babychaosfloh_hd.musicplus.listener;
 
 import me.babychaosfloh_hd.musicplus.MusicPlus;
-import me.babychaosfloh_hd.musicplus.files.filemanager;
 import me.babychaosfloh_hd.musicplus.item.dischandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
