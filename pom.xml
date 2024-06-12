@@ -16,6 +16,11 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
+
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -42,75 +47,38 @@
                                     <mainClass>me.Babychaosfloh_HD.MainClass</mainClass>
                                 </transformer>
                             </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>com.jeff_media.customblockdata</pattern>
-                            <shadedPattern>me.babychaosfloh_hd.musicplus.customblockdata</shadedPattern>
-                        </relocation>
 
-                        <relocation>
-                            <pattern>com.jeff_media.morepersistentdatatypes</pattern>
-                            <shadedPattern>me.babychaosfloh_hd.musicplus.morepersistentdatatypes</shadedPattern>
-                        </relocation>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.jeff_media.customblockdata</pattern>
+                                    <shadedPattern>me.babychaosfloh_hd.musicplus.customblockdata</shadedPattern>
+                                </relocation>
 
-                        <relocation>
-                            <pattern>net.wesjd.anvilgui</pattern>
-                            <shadedPattern>me.babychaosfloh_hd.musicplus.anvilgui</shadedPattern> <!-- Replace [YOUR_PLUGIN_PACKAGE] with your namespace -->
-                        </relocation>
-                        <repository>
-                            <id>codemc-snapshots</id>
-                            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
-                        </repository>
-                    </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludeDefaults>false</excludeDefaults>
-                            <includes>
-                                <include>net/wesjd/anvilgui/**</include>
-                            </includes>
-                        </filter>
-                    </filters>
-                </configuration>
-            </plugin>
+                                <relocation>
+                                    <pattern>com.jeff_media.morepersistentdatatypes</pattern>
+                                    <shadedPattern>me.babychaosfloh_hd.musicplus.morepersistentdatatypes</shadedPattern>
+                                </relocation>
 
-            <plugin>
-                <groupId>net.md-5</groupId>
-                <artifactId>specialsource-maven-plugin</artifactId>
-                <version>1.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>remap</goal>
-                        </goals>
-                        <id>remap-obf</id>
-                        <configuration>
-                            <srgIn>org.spigotmc:minecraft-server:1.20.1-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
-                            <reverse>true</reverse>
-                            <remappedDependencies>org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
-                            <remappedArtifactAttached>true</remappedArtifactAttached>
-                            <remappedClassifierName>remapped-obf</remappedClassifierName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>remap</goal>
-                        </goals>
-                        <id>remap-spigot</id>
-                        <configuration>
-                            <inputFile>${project.build.directory}/${project.artifactId}-${project.version}-remapped-obf.jar</inputFile>
-                            <srgIn>org.spigotmc:minecraft-server:1.20.1-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-                            <remappedDependencies>org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
+                                <relocation>
+                                    <pattern>net.wesjd.anvilgui</pattern>
+                                    <shadedPattern>me.babychaosfloh_hd.musicplus.anvilgui</shadedPattern> <!-- Replace [YOUR_PLUGIN_PACKAGE] with your namespace -->
+                                </relocation>
+                            </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludeDefaults>false</excludeDefaults>
+                                    <includes>
+                                        <include>net/wesjd/anvilgui/**</include>
+                                    </includes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+
         </plugins>
     </build>
 
