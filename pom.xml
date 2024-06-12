@@ -28,7 +28,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -45,12 +45,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
                 <configuration>
                     <relocations>
                         <relocation>
@@ -62,7 +56,25 @@
                             <pattern>com.jeff_media.morepersistentdatatypes</pattern>
                             <shadedPattern>me.babychaosfloh_hd.musicplus.morepersistentdatatypes</shadedPattern>
                         </relocation>
+
+                        <relocation>
+                            <pattern>net.wesjd.anvilgui</pattern>
+                            <shadedPattern>me.babychaosfloh_hd.musicplus.anvilgui</shadedPattern> <!-- Replace [YOUR_PLUGIN_PACKAGE] with your namespace -->
+                        </relocation>
+                        <repository>
+                            <id>codemc-snapshots</id>
+                            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+                        </repository>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludeDefaults>false</excludeDefaults>
+                            <includes>
+                                <include>net/wesjd/anvilgui/**</include>
+                            </includes>
+                        </filter>
+                    </filters>
                 </configuration>
             </plugin>
 
@@ -126,6 +138,14 @@
             <artifactId>MorePersistentDataTypes</artifactId>
             <version>2.4.0</version>
             <scope>compile</scope>
+        </dependency>
+
+
+        <!-- AnvilGui -->
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.9.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

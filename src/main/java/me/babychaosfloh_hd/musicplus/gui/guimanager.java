@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import me.babychaosfloh_hd.musicplus.MusicPlus;
 import me.babychaosfloh_hd.musicplus.download.language;
 import me.babychaosfloh_hd.musicplus.files.filemanager;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -214,6 +215,28 @@ public class guimanager implements Listener {
 
         ItemStack item = new ItemStack(Material.PAPER);
         menu.setItem(0, item);
+
+        AnvilGUI test = new AnvilGUI.Builder()
+                .onClose(stateSnapshot -> {
+                    stateSnapshot.getPlayer().sendMessage("You closed the inventory.");
+                })
+                .onClick((slot, stateSnapshot) -> { // Either use sync or async variant, not both
+                    if(slot != AnvilGUI.Slot.OUTPUT) {
+                        return Collections.emptyList();
+                    }
+
+                    if(stateSnapshot.getText().equalsIgnoreCase("you")) {
+                        stateSnapshot.getPlayer().sendMessage("You have magical powers!");
+                        return Arrays.asList(AnvilGUI.ResponseAction.close());
+                    } else {
+                        return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText("Try again"));
+                    }
+                })
+                .preventClose()                                                    //prevents the inventory from being closed
+                .text("What is the meaning of life?")                              //sets the text the GUI should start with
+                .title("Enter your answer.")                                       //set the title of the GUI (only works in 1.14+)
+                .plugin(that)                                          //set the plugin instance
+                .open(player);                                                   //opens the GUI for the player provided
 
         //inv = menu;
         //player.openInventory(menu);

@@ -30,9 +30,11 @@ public class noteblocklistener implements Listener {
                 player.sendMessage("message");
                 noteblockhandler.setnote(clicked);
                 noteblockhandler.setinstrument(player, clicked);
+                e.setCancelled(true);
             }
 
             if (player.getGameMode().equals(mode) && e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                e.setCancelled(true);
                 player.sendMessage("message");
                 noteblockhandler.setinstrument(player, clicked);
                 noteblockhandler.playnote(clicked);
