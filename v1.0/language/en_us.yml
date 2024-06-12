@@ -1,1 +1,35 @@
-keyboard: "QWERTYUIOASDFGHJKLZXCVBNM,."
+menu_any_back: "Back"
+
+menu_music_manager_title: "Music Manager"
+menu_music_manager_close: "Close"
+menu_music_manager_note_manager: "Note Manager"
+menu_music_manager_disc_manager: "Disc Manager"
+
+menu_note_manager_title: "Note Manager"
+menu_note_manager_add_notes: "Add Notes"
+menu_note_manager_item_lore: 
+  - "LeftCLick to edit!"
+  - "Shift-RightClick to delete!"
+
+menu_disc_manager_title: "Disc Manager"
+
+menu_note_add_material_title: "Select Material"
+menu_note_add_material_item_lore: 
+  - "LeftCLick to confirm!"
+  - "Shift-RightClick to cancel!"
+
+menu_keyboard_title: "Keyboard"
+menu_keyboard_placeholder: "Enter sound name"
+menu_keyboard_null: "Please provide a sound"
+menu_keyboard_keyboard: "QWERTYUIOASDFGHJKLZXCVBNM"
+menu_keyboard_num: "num"
+menu_keyboard_delete: "Delete"
+menu_keyboard_space: "Space"
+
+menu_numpad_title: "NumPad"
+menu_numpad_workingporgress:
+  - "Press ESC to close!"
+
+menu_confirm_title: "Are you shure?"
+menu_confirm_confirm: "Confirm"
+menu_confirm_cancel: "Cancel"
