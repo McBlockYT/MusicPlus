@@ -32,6 +32,8 @@ public class guimanager implements Listener {
     private static Inventory inv;
     public static String local;
     private static int slots;
+    private static String output;
+    private static boolean anvil = false;
 
     public guimanager(MusicPlus plugin) {
         this.plugin = plugin;
@@ -209,37 +211,55 @@ public class guimanager implements Listener {
         player.openInventory(menu);
     }
 
-    public static void testGui(Player player) {
+    public static void SoundGui(Player player, ItemStack item, String inventory) {
 
-        Inventory menu = Bukkit.createInventory(player, InventoryType.ANVIL, "test");
+        anvil = false;
 
-        ItemStack item = new ItemStack(Material.PAPER);
-        menu.setItem(0, item);
-
-        AnvilGUI test = new AnvilGUI.Builder()
+        AnvilGUI note = new AnvilGUI.Builder()
                 .onClose(stateSnapshot -> {
-                    stateSnapshot.getPlayer().sendMessage("You closed the inventory.");
+                    open = true;
+                    if (inventory == language.getlang(local).getString("menu_note_manager_title")) {
+                        NoteMenu(player);
+                    }
+                    else if (inventory == language.getlang(local).getString("menu_disc_manager_title")) {
+                        DiscMenu(player);
+                    }
                 })
                 .onClick((slot, stateSnapshot) -> { // Either use sync or async variant, not both
                     if(slot != AnvilGUI.Slot.OUTPUT) {
                         return Collections.emptyList();
                     }
 
-                    if(stateSnapshot.getText().equalsIgnoreCase("you")) {
-                        stateSnapshot.getPlayer().sendMessage("You have magical powers!");
+                    if(stateSnapshot.getText() != null || stateSnapshot.getText().equalsIgnoreCase(language.getlang(local).getString("menu_keyboard_placeholder"))) {
+
+                        inv = null;
+                        //output = stateSnapshot.getText();
+                        //anvil = false;
+                        player.sendMessage("text");
+                        filemanager.getnote().set(item.getType().toString(), stateSnapshot.getText());
+                        filemanager.savenote();
+                        filemanager.reload();
+                        open = true;
+                        NoteMenu(player);
+
+                        /*
+                        filemanager.getnote().set(item.getType().toString(), stateSnapshot.getText());
+                        filemanager.savenote();
+                        filemanager.reload();
+                        open = true;
+                        NoteMenu(player);
+                         */
                         return Arrays.asList(AnvilGUI.ResponseAction.close());
                     } else {
                         return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText("Try again"));
                     }
                 })
-                .preventClose()                                                    //prevents the inventory from being closed
-                .text("What is the meaning of life?")                              //sets the text the GUI should start with
-                .title("Enter your answer.")                                       //set the title of the GUI (only works in 1.14+)
-                .plugin(that)                                          //set the plugin instance
-                .open(player);                                                   //opens the GUI for the player provided
-
-        //inv = menu;
-        //player.openInventory(menu);
+                //.preventClose()                                                                             //prevents the inventory from being closed
+                .text(language.getlang(local).getString("menu_keyboard_placeholder"))                 //sets the text the GUI should start with
+                .title(language.getlang(local).getString("menu_keyboard_title"))                      //set the title of the GUI (only works in 1.14+)
+                .plugin(that)                                                                               //set the plugin instance
+                .open(player);                                                                              //opens the GUI for the player provided
+        anvil =  true;
     }
 
     @EventHandler
@@ -251,9 +271,9 @@ public class guimanager implements Listener {
             conf = null;
             inv = null;
         }
-        else if (open && e.getView().getTitle().equals(language.getlang(local).getString("menu_numpad_title"))) {
-            keyboard.keyboard(player, keyboard.add);
-        }
+        //else if (open && e.getView().getTitle().equals(language.getlang(local).getString("menu_numpad_title"))) {
+        //    keyboard.keyboard(player, keyboard.add);
+        //}
         else {
             open = false;
         }
@@ -271,8 +291,7 @@ public class guimanager implements Listener {
             that.getLogger().log(Level.INFO, CurrentItem.getItemMeta().toString());
             if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(language.getlang(local).getString("menu_music_manager_disc_manager"))) {
                 open = true;
-                testGui(player);
-                //DiscMenu(player);
+                DiscMenu(player);
             }
             else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(language.getlang(local).getString("menu_music_manager_note_manager"))) {
                 open = true;
@@ -285,9 +304,16 @@ public class guimanager implements Listener {
             else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_music_manager_close"))) {
                 player.closeInventory();
             }
-            else if (itemStacks.contains(e.getCurrentItem()) && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
+            else if (itemStacks.contains(e.getCurrentItem()) && e.isShiftClick() && e.isRightClick() && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
                 open = true;
                 confirmdelGui(player, e.getCurrentItem());
+            }
+            else if (itemStacks.contains(e.getCurrentItem()) && e.isLeftClick() && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
+                SoundGui(player, e.getCurrentItem().clone(), language.getlang(local).getString("menu_note_manager_title"));
+                if (anvil == true) {
+
+                    anvil = false;
+                }
             }
             else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + language.getlang(local).getString("menu_note_manager_add_notes"))) {
                 open = true;
@@ -308,11 +334,14 @@ public class guimanager implements Listener {
             player.sendMessage(String.valueOf(count));
             if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && count > 0 && player.hasPermission("musicplus.give")) {
                 player.getInventory().addItem(new ItemStack[]{e.getCurrentItem()});
-            } else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && count == 0) {
+            }
+            else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && count == 0) {
                 player.sendMessage(ChatColor.RED + "Sorry you got no space in your inventory");
-            } else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && !player.hasPermission("musicplus.give")) {
+            }
+            else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_disc_manager_title")) && itemStacks.contains(e.getCurrentItem()) && !player.hasPermission("musicplus.give")) {
                 player.sendMessage(ChatColor.RED + "Sorry you only have the permission to view the Custom Music Discs!");
-            } else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_confirm_title")) && e.getCurrentItem().getType().equals(Material.RED_WOOL)) {
+            }
+            else if (e.getView().getTitle().equals(language.getlang(local).getString("menu_confirm_title")) && e.getCurrentItem().getType().equals(Material.RED_WOOL)) {
                 that.getLogger().warning("deleting: " + delItem);
                 filemanager.getnote().set(delItem.getType().toString(), null);
                 filemanager.savenote();
@@ -330,7 +359,10 @@ public class guimanager implements Listener {
                     inv.setItem(4, clone);
                 }
                 if (e.getSlot() == 4 && e.isLeftClick()) {
-                    keyboard.keyboard(player, e.getCurrentItem().clone());
+                    SoundGui(player, e.getCurrentItem().clone(), language.getlang(local).getString("menu_disc_manager_title"));
+                    if (anvil = true) {
+
+                    }
                 } else if (e.getSlot() == 4 && e.isShiftClick() && e.isRightClick()) {
                     open = true;
                     NoteMenu(player);
@@ -340,19 +372,5 @@ public class guimanager implements Listener {
             e.setCancelled(true);
         }
 
-    }
-
-    @EventHandler
-    public void onAnvilClick(InventoryClickEvent event) {
-        Inventory inventory = event.getClickedInventory();
-        if (inventory.getType() == InventoryType.ANVIL) {
-            if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-                try {
-                    that.getLogger().info((String) inventory.getClass().getMethod("getRenameText").invoke(inventory));
-                } catch (Exception e) {
-                   that.getLogger().warning(e.getMessage());
-                }
-            }
-        }
     }
 }
