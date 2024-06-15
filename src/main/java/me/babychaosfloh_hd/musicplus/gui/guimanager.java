@@ -304,7 +304,7 @@ public class guimanager implements Listener {
             else if (CurrentItem.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + ChatColor.UNDERLINE + language.getlang(local).getString("menu_music_manager_close"))) {
                 player.closeInventory();
             }
-            else if (itemStacks.contains(e.getCurrentItem()) && e.isShiftClick() && e.isRightClick() && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
+            else if (itemStacks.contains(e.getCurrentItem()) && e.isShiftClick() && e.isLeftClick() && e.getView().getTitle().equals(language.getlang(local).getString("menu_note_manager_title"))) {
                 open = true;
                 confirmdelGui(player, e.getCurrentItem());
             }
